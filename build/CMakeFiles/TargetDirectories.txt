@@ -1,3 +1,0 @@
-/home/hemal/Documents/Search_Engine/build/CMakeFiles/search_engine.dir
-/home/hemal/Documents/Search_Engine/build/CMakeFiles/edit_cache.dir
-/home/hemal/Documents/Search_Engine/build/CMakeFiles/rebuild_cache.dir
