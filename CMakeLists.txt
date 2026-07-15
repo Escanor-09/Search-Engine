@@ -10,6 +10,7 @@ add_executable(search_engine
     src/main.cpp
     src/parser.cpp
     src/tokenizer.cpp
+    src/index.cpp
 )
 
 target_include_directories(search_engine

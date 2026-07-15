@@ -2,5 +2,5 @@
     "id": 2,
     "url": "https://example.com/2",
     "title": "Information Retrieval",
-    "content": "An inverted index maps terms to documents."
+    "content": "An inverted index crawls and maps terms to documents. Hello World."
 }
