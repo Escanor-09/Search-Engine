@@ -1,0 +1,6 @@
+{
+    "id": 5,
+    "url": "https://example.com/database",
+    "title": "Database Systems",
+    "content": "A database stores structured data efficiently. Index structures such as B trees and hash tables improve query performance. Search, indexing, and retrieval are fundamental database concepts."
+}

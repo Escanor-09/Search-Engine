@@ -1,5 +1,26 @@
 #include "tokenizer.h"
+#include <fstream>
+Tokenizer::Tokenizer()
+{
+    loadStopWords("resources/stopwords.txt");
+}
 
+void Tokenizer::loadStopWords(const std::string &filename)
+{
+    std::ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Failed to open stop words file: " + filename);
+    }
+
+    std::string word;
+
+    while (file >> word)
+    {
+        stopWords.insert(word);
+    }
+}
 std::vector<std::string> Tokenizer::tokenize(const std::string &text)
 {
     std::vector<std::string> tokens;
@@ -17,7 +38,8 @@ std::vector<std::string> Tokenizer::tokenize(const std::string &text)
         {
             if (!currentWord.empty())
             {
-                tokens.push_back(currentWord);
+                if (stopWords.find(currentWord) == stopWords.end())
+                    tokens.push_back(currentWord);
                 currentWord.clear();
             }
         }

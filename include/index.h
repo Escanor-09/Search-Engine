@@ -7,10 +7,17 @@
 #include "document.h"
 #include "tokenizer.h"
 
+struct Posting
+{
+    int docId;
+    int termFrequency;
+    std::vector<int> positions;
+};
+
 class InvertedIndex
 {
 private:
-    std::unordered_map<std::string, std::vector<int>> invertedIndexMap;
+    std::unordered_map<std::string, std::vector<Posting>> invertedIndexMap;
 
 public:
     void build(const std::vector<Document> &document, Tokenizer &tokenizer);

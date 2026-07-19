@@ -1,6 +1,6 @@
 {
     "id": 1,
-    "url": "https://example.com/1",
+    "url": "https://example.com/search-engines",
     "title": "Introduction to Search Engines",
-    "content": "Search engines crawl and index web pages.Hello World."
+    "content": "Search engines crawl web pages and build an inverted index. A search engine stores terms, documents, and positions for efficient retrieval. Hello World! Search is powerful."
 }

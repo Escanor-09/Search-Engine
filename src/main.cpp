@@ -18,4 +18,5 @@ int main()
     for (int id : doc)
         std::cout << id << " " << "\n";
     return 0;
+    std::cout << __cplusplus << "\n";
 }

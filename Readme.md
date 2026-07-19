@@ -12,6 +12,9 @@ Alternatives:
 2) Why spearate file check was not used if the file exists or not?
 -> I considered using std::filesystem::Exists(), but checking existence before opening introduces a potential TOCTOU race condition. The definitive operation is attempting to open the files. If std::ifstream fails, I treat it as an open failure and propagate an exception. If the application required more specific diagnostics, I could use std::filesystem or platform-specific error information to distinguish between missing files, permission issues, and other I/O errors.
 
+3) Why remove Stop-Words?? What are Stop Words??
+-> Stop words are common, frequently used words—such as "the," "is," and "in"—that carry very little inherent meaning. In natural language processing (NLP) and search engines, these words are often ignored or filtered out to reduce computational "noise" and focus exclusively on core, meaningful terms.
+-> While removing stop words is a staple of text analysis, algorithms handling machine translation, language modeling, and question-answering tasks generally keep them. In these cases, the structural context provided by stop words is critical to understanding meaning.
 
 To run this project
 //cmake -S . -B build

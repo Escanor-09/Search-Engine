@@ -1,0 +1,6 @@
+{
+    "id": 3,
+    "url": "https://example.com/cpp",
+    "title": "Learning Modern C++",
+    "content": "C++ provides vectors, unordered maps, classes, and templates. Templates make generic programming easier. Modern C++ is efficient and powerful."
+}
