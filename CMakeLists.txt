@@ -17,6 +17,7 @@ add_executable(search_engine
     src/tokenizer.cpp
     src/index.cpp
     src/stemmer.cpp
+    src/endian_utils.cpp
 )
 
 target_include_directories(search_engine

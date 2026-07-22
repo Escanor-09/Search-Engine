@@ -1,7 +1,10 @@
 #include "index.h"
+#include "endian_utils.h"
+#include "stemmer.h"
 #include <iomanip>
 #include <map>
 #include <cmath>
+#include <cstring>
 #include <fstream>
 
 struct TemporaryWordData
@@ -67,7 +70,7 @@ void InvertedIndex::build(const std::vector<Document> &documents, Tokenizer &tok
             posting.docId = docId;
             posting.termFrequency = static_cast<uint32_t>(positionsVec.size());
 
-            posting.postionStartIndex = static_cast<uint32_t>(globalPositionsPool.size());
+            posting.positionStartIndex = static_cast<uint32_t>(globalPositionsPool.size());
 
             for (int32_t pos : positionsVec)
             {
@@ -77,6 +80,12 @@ void InvertedIndex::build(const std::vector<Document> &documents, Tokenizer &tok
             globalPostingPool.push_back(posting);
         }
         termDictionary.push_back(record);
+    }
+    termLookupTable.clear();
+    termLookupTable.reserve(termDictionary.size());
+    for (size_t i = 0; i < termDictionary.size(); i++)
+    {
+        termLookupTable[termDictionary[i].word] = static_cast<uint32_t>(i);
     }
 }
 
@@ -97,7 +106,7 @@ void InvertedIndex::printInvertedIndex() const
 
             for (uint32_t j = 0; j < posting.termFrequency; ++j)
             {
-                std::cout << globalPositionsPool[posting.postionStartIndex + j];
+                std::cout << globalPositionsPool[posting.positionStartIndex + j];
                 if (j + 1 != posting.termFrequency)
                     std::cout << ",";
             }
@@ -111,13 +120,16 @@ void InvertedIndex::printInvertedIndex() const
 
 std::vector<SearchResult> InvertedIndex::searchBM25(const std::string &word) const
 {
-    auto it = std::lower_bound(termDictionary.begin(), termDictionary.end(), word, [](const TermRecord &record, const std::string &target)
-                               { return record.word < target; });
+    std::string stemmedQuery = stemmer.stem(word);
 
-    if (it == termDictionary.end() || it->word != word)
+    auto lookupIt = termLookupTable.find(stemmedQuery);
+    if (lookupIt == termLookupTable.end())
     {
-        return {}; // wrod does not exist
+        return {};
     }
+
+    uint32_t dictIdx = lookupIt->second;
+    const auto &record = termDictionary[dictIdx];
 
     // BM25 Constatns (statndard industry tuning choices)
     const double k1 = 1.2;
@@ -125,15 +137,15 @@ std::vector<SearchResult> InvertedIndex::searchBM25(const std::string &word) con
 
     // Calculate inverse Document Frequency for this word
     // Words that appear everywhere like "the" get a score close to 0
-    double df = static_cast<double>(it->postingCount);
+    double df = static_cast<double>(record.postingCount);
     double idf = std::log((totalDocsCount - df + 0.5) / (df + 0.5) + 1.0);
 
     std::vector<SearchResult> rankedResults;
-    rankedResults.reserve(it->postingCount);
+    rankedResults.reserve(record.postingCount);
 
-    for (uint32_t i = 0; i < it->postingCount; ++i)
+    for (uint32_t i = 0; i < record.postingCount; ++i)
     {
-        const auto &posting = globalPostingPool[it->postingStartIndex + i];
+        const auto &posting = globalPostingPool[record.postingStartIndex + i];
 
         double tf = static_cast<double>(posting.termFrequency);
         double dl = static_cast<double>(docLengths.at(posting.docId));
@@ -158,53 +170,106 @@ std::vector<SearchResult> InvertedIndex::searchBM25(const std::string &word) con
 
 bool InvertedIndex::saveToDisk(const std::string &filepath) const
 {
+
     std::ofstream out(filepath, std::ios::binary);
     if (!out.is_open())
         return false;
 
-    out.write(reinterpret_cast<const char *>(&avgDocLength), sizeof(avgDocLength));
-    out.write(reinterpret_cast<const char *>(&totalDocsCount), sizeof(totalDocsCount));
+    uint64_t headerStartPos = out.tellp();
+    char magicBytes[8] = {'M', 'Y', 'E', 'N', 'G', 'I', 'N', 'E'};
+    out.write(magicBytes, 8);
+    EndianUtils::writeLE32(out, 1);
 
-    auto writeFlatVector = [&out](const auto &vec)
+    for (int i = 0; i < 6; i++)
     {
-        size_t size = vec.size();
-        out.write(reinterpret_cast<const char *>(&size), sizeof(size));
-        if (size > 0)
-        {
-            out.write(reinterpret_cast<const char *>(vec.data()), size * sizeof(typename std::decay_t<decltype(vec)>::value_type));
-        }
-    };
-    writeFlatVector(globalPostingPool);
-    writeFlatVector(globalPositionsPool);
-
-    size_t lenMapSize = docLengths.size();
-    out.write(reinterpret_cast<const char *>(&lenMapSize), sizeof(lenMapSize));
-    for (const auto &[id, length] : docLengths)
-    {
-        out.write(reinterpret_cast<const char *>(&id), sizeof(id));
-        out.write(reinterpret_cast<const char *>(&length), sizeof(length));
+        EndianUtils::writeLE64(out, 0);
     }
 
-    size_t dictSize = termDictionary.size();
-    out.write(reinterpret_cast<const char *>(&dictSize), sizeof(dictSize));
+    uint64_t globalStatsOffset = out.tellp();
+
+    union
+    {
+        double d;
+        uint64_t u;
+    } avgDocConverter;
+
+    avgDocConverter.d = avgDocLength;
+    EndianUtils::writeLE64(out, avgDocConverter.u);
+    EndianUtils::writeLE64(out, totalDocsCount);
+
+    // Explicitly write Posting Pool
+    uint64_t postingPoolOffset = out.tellp();
+    EndianUtils::writeLE64(out, globalPostingPool.size());
+    for (const auto &posting : globalPostingPool)
+    {
+        EndianUtils::writeVariant32(out, static_cast<uint32_t>(posting.docId));
+        EndianUtils::writeVariant32(out, posting.termFrequency);
+        EndianUtils::writeVariant32(out, posting.positionStartIndex);
+    }
+
+    // Explicitly write Positions Pool
+    uint64_t positionPoolOffset = out.tellp();
+    EndianUtils::writeLE64(out, globalPositionsPool.size());
+
     for (const auto &record : termDictionary)
     {
-        size_t wordLen = record.word.size();
-        out.write(reinterpret_cast<const char *>(&wordLen), sizeof(wordLen));
-        out.write(record.word.data(), wordLen);
-        out.write(reinterpret_cast<const char *>(&record.postingStartIndex), sizeof(record.postingStartIndex));
-        out.write(reinterpret_cast<const char *>(&record.postingCount), sizeof(record.postingCount));
+        for (uint32_t i = 0; i < record.postingCount; i++)
+        {
+            const auto &posting = globalPostingPool[record.postingStartIndex + i];
+
+            uint32_t prevPosition = 0;
+            for (uint32_t j = 0; j < posting.termFrequency; j++)
+            {
+                uint32_t currentPosition = static_cast<uint32_t>(globalPositionsPool[posting.positionStartIndex + j]);
+
+                uint32_t gap = currentPosition - prevPosition;
+                EndianUtils::writeVariant32(out, gap);
+
+                prevPosition = currentPosition;
+            }
+        }
     }
 
-    size_t urlMapSize = docUrls.size();
-    out.write(reinterpret_cast<const char *>(&urlMapSize), sizeof(urlMapSize));
+    // Explicitly write Doc Length
+    uint64_t docLengthsOffset = out.tellp();
+    EndianUtils::writeLE64(out, docLengths.size());
+    for (const auto &[id, length] : docLengths)
+    {
+        EndianUtils::writeLE32(out, id);
+        EndianUtils::writeLE32(out, length);
+    }
+
+    // Explicitly write TermDicitonary
+    uint64_t dictionaryOffset = out.tellp();
+    EndianUtils::writeLE64(out, termDictionary.size());
+    for (const auto &record : termDictionary)
+    {
+        size_t wordlen = record.word.size();
+        EndianUtils::writeLE64(out, wordlen);
+        out.write(record.word.data(), wordlen);
+        EndianUtils::writeLE32(out, record.postingStartIndex);
+        EndianUtils::writeLE32(out, record.postingCount);
+    }
+
+    // Explicitly write docUrls Map
+    uint64_t docUrlsOffset = out.tellp();
+    EndianUtils::writeLE64(out, docUrls.size());
     for (const auto &[id, url] : docUrls)
     {
-        out.write(reinterpret_cast<const char *>(&id), sizeof(id));
+        EndianUtils::writeLE32(out, id);
         size_t urlLen = url.size();
-        out.write(reinterpret_cast<const char *>(&urlLen), sizeof(urlLen));
+        EndianUtils::writeLE64(out, urlLen);
         out.write(url.data(), urlLen);
     }
+
+    // seek back and write genuine completed index offsets safely
+    out.seekp(headerStartPos + 12);
+    EndianUtils::writeLE64(out, globalStatsOffset);
+    EndianUtils::writeLE64(out, postingPoolOffset);
+    EndianUtils::writeLE64(out, positionPoolOffset);
+    EndianUtils::writeLE64(out, docLengthsOffset);
+    EndianUtils::writeLE64(out, dictionaryOffset);
+    EndianUtils::writeLE64(out, docUrlsOffset);
 
     return true;
 }
@@ -215,65 +280,117 @@ bool InvertedIndex::loadFromDisk(const std::string &filepath)
     if (!in.is_open())
         return false;
 
+    char magicCheck[8];
+    in.read(magicCheck, 8);
+    if (std::memcmp(magicCheck, "MYENGINE", 8) != 0)
+    {
+        std::cerr << "Load Error: Endian file header mismatch. \n";
+        return false;
+    }
+
+    uint32_t version = EndianUtils::readLE32(in);
+    if (version != 1)
+        return false;
+
+    uint64_t globalStatsOffset = EndianUtils::readLE64(in);
+    uint64_t postingPoolOffset = EndianUtils::readLE64(in);
+    uint64_t positionPoolOffest = EndianUtils::readLE64(in);
+    uint64_t docLengthOffset = EndianUtils::readLE64(in);
+    uint64_t dictionaryOffset = EndianUtils::readLE64(in);
+    uint64_t docUrlsOffset = EndianUtils::readLE64(in);
+
     termDictionary.clear();
     globalPostingPool.clear();
     globalPositionsPool.clear();
     docLengths.clear();
     docUrls.clear();
+    termLookupTable.clear();
 
-    in.read(reinterpret_cast<char *>(&avgDocLength), sizeof(avgDocLength));
-    in.read(reinterpret_cast<char *>(&totalDocsCount), sizeof(totalDocsCount));
-
-    auto readFlatVector = [&in](auto &vec)
+    // Load Global stats
+    in.seekg(globalStatsOffset);
+    union
     {
-        size_t size = 0;
-        in.read(reinterpret_cast<char *>(&size), sizeof(size));
-        vec.resize(size);
-        if (size > 0)
-        {
-            in.read(reinterpret_cast<char *>(vec.data()), size * sizeof(typename std::decay_t<decltype(vec)>::value_type));
-        }
-    };
-    readFlatVector(globalPostingPool);
-    readFlatVector(globalPositionsPool);
+        uint64_t u;
+        double d;
+    } avgDocConverter;
+    avgDocConverter.u = EndianUtils::readLE64(in);
+    avgDocLength = avgDocConverter.d;
+    totalDocsCount = EndianUtils::readLE64(in);
 
-    size_t lenMapSize = 0;
-    in.read(reinterpret_cast<char *>(&lenMapSize), sizeof(lenMapSize));
-    for (size_t i = 0; i < lenMapSize; ++i)
+    // Load Postings Pool Explicitly
+    in.seekg(postingPoolOffset);
+    size_t postingSize = EndianUtils::readLE64(in);
+    globalPostingPool.resize(postingSize);
+    for (size_t i = 0; i < postingSize; i++)
     {
-        int32_t id;
-        uint32_t length;
-        in.read(reinterpret_cast<char *>(&id), sizeof(id));
-        in.read(reinterpret_cast<char *>(&length), sizeof(length));
-        docLengths[id] = length;
+        globalPostingPool[i].docId = static_cast<int32_t>(EndianUtils::readVariant32(in));
+        globalPostingPool[i].termFrequency = EndianUtils::readVariant32(in);
+        globalPostingPool[i].positionStartIndex = EndianUtils::readVariant32(in);
     }
 
-    size_t dictSize = 0;
-    in.read(reinterpret_cast<char *>(&dictSize), sizeof(dictSize));
+    // Load TermDicitonary explicitly
+    in.seekg(dictionaryOffset);
+    size_t dictSize = EndianUtils::readLE64(in);
     termDictionary.resize(dictSize);
-    for (size_t i = 0; i < dictSize; ++i)
+
+    termLookupTable.clear();
+    termLookupTable.reserve(dictSize);
+
+    for (size_t i = 0; i < dictSize; i++)
     {
-        size_t wordLen = 0;
-        in.read(reinterpret_cast<char *>(&wordLen), sizeof(wordLen));
+        size_t wordLen = EndianUtils::readLE64(in);
         std::string tempWord(wordLen, '\0');
         in.read(tempWord.data(), wordLen);
         termDictionary[i].word = std::move(tempWord);
-        in.read(reinterpret_cast<char *>(&termDictionary[i].postingStartIndex), sizeof(termDictionary[i].postingStartIndex));
-        in.read(reinterpret_cast<char *>(&termDictionary[i].postingCount), sizeof(termDictionary[i].postingCount));
+        termDictionary[i].postingStartIndex = EndianUtils::readLE32(in);
+        termDictionary[i].postingCount = EndianUtils::readLE32(in);
+
+        termLookupTable[termDictionary[i].word] = static_cast<uint32_t>(i);
     }
 
-    size_t urlMapSize = 0;
-    in.read(reinterpret_cast<char *>(&urlMapSize), sizeof(urlMapSize));
-    for (size_t i = 0; i < urlMapSize; ++i)
+    // Load Postions Pool Explicitly
+    in.seekg(positionPoolOffest);
+    size_t positionSize = EndianUtils::readLE64(in);
+    globalPositionsPool.resize(positionSize);
+
+    for (const auto &record : termDictionary)
     {
-        int32_t id;
-        size_t urlLen = 0;
-        in.read(reinterpret_cast<char *>(&id), sizeof(id));
-        in.read(reinterpret_cast<char *>(&urlLen), sizeof(urlLen));
+        for (uint32_t i = 0; i < record.postingCount; i++)
+        {
+            const auto &posting = globalPostingPool[record.postingStartIndex + i];
+
+            uint32_t accumulatedPosition = 0;
+            for (uint32_t j = 0; j < posting.termFrequency; j++)
+            {
+                uint32_t gap = EndianUtils::readVariant32(in);
+                accumulatedPosition += gap;
+
+                globalPositionsPool[posting.positionStartIndex + j] = static_cast<int32_t>(accumulatedPosition);
+            }
+        }
+    }
+
+    // Load docLengths Map Explicitly
+    in.seekg(docLengthOffset);
+    size_t lenMapSize = EndianUtils::readLE64(in);
+    for (size_t i = 0; i < lenMapSize; i++)
+    {
+        int32_t id = static_cast<int32_t>(EndianUtils::readLE32(in));
+        uint32_t dynamicLength = EndianUtils::readLE32(in);
+        docLengths[id] = dynamicLength;
+    }
+
+    // Load docUrls Map explicitly
+    in.seekg(docUrlsOffset);
+    size_t urlMapSize = EndianUtils::readLE64(in);
+    for (size_t i = 0; i < urlMapSize; i++)
+    {
+        int32_t id = static_cast<int32_t>(EndianUtils::readLE32(in));
+        size_t urlLen = EndianUtils::readLE64(in);
         std::string tempUrl(urlLen, '\0');
         in.read(tempUrl.data(), urlLen);
         docUrls[id] = std::move(tempUrl);
     }
 
-    return true;
+    return !in.bad();
 }

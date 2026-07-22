@@ -14,5 +14,5 @@ public:
     Stemmer();
     ~Stemmer();
 
-    std::string stem(std::string_view word);
+    std::string stem(std::string_view word) const;
 };

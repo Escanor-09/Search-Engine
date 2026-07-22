@@ -13,7 +13,7 @@ struct Posting
 {
     int32_t docId;
     uint32_t termFrequency;
-    uint32_t postionStartIndex; // Index into globalPositionPool
+    uint32_t positionStartIndex; // Index into globalPositionPool
 };
 
 struct TermRecord
@@ -36,6 +36,7 @@ private:
     std::vector<TermRecord> termDictionary;
     std::vector<int32_t> globalPositionsPool;
     std::vector<Posting> globalPostingPool;
+    std::unordered_map<std::string, uint32_t> termLookupTable;
 
     Stemmer stemmer;
 

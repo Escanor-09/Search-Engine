@@ -20,7 +20,7 @@ Stemmer::~Stemmer()
     }
 }
 
-std::string Stemmer::stem(std::string_view word)
+std::string Stemmer::stem(std::string_view word) const
 {
 
     if (word.empty())
