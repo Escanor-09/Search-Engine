@@ -1,0 +1,382 @@
+{
+  "rows": [
+    {
+      "query": "renewable grid development",
+      "type": "lexical",
+      "num_relevant": 7,
+      "bm25": {
+        "precision_at_10": 0.7,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 1000
+      },
+      "semantic": {
+        "precision_at_10": 0.7,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 1000
+      }
+    },
+    {
+      "query": "climate research",
+      "type": "lexical",
+      "num_relevant": 3,
+      "bm25": {
+        "precision_at_10": 0.1,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.2960819109658652,
+        "num_results": 246
+      },
+      "semantic": {
+        "precision_at_10": 0.1,
+        "mrr": 0.25,
+        "ndcg_at_10": 0.20210734650054757,
+        "num_results": 261
+      }
+    },
+    {
+      "query": "online learning",
+      "type": "lexical",
+      "num_relevant": 8,
+      "bm25": {
+        "precision_at_10": 0.3,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.3949969211264808,
+        "num_results": 196
+      },
+      "semantic": {
+        "precision_at_10": 0.4,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.5865267152450974,
+        "num_results": 211
+      }
+    },
+    {
+      "query": "transfer window",
+      "type": "lexical",
+      "num_relevant": 8,
+      "bm25": {
+        "precision_at_10": 0.8,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 93
+      },
+      "semantic": {
+        "precision_at_10": 0.6,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.8255857570917466,
+        "num_results": 108
+      }
+    },
+    {
+      "query": "streaming series",
+      "type": "lexical",
+      "num_relevant": 8,
+      "bm25": {
+        "precision_at_10": 0.8,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 97
+      },
+      "semantic": {
+        "precision_at_10": 0.8,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 112
+      }
+    },
+    {
+      "query": "data privacy law",
+      "type": "lexical",
+      "num_relevant": 5,
+      "bm25": {
+        "precision_at_10": 0.2,
+        "mrr": 0.2,
+        "ndcg_at_10": 0.2442584792702138,
+        "num_results": 500
+      },
+      "semantic": {
+        "precision_at_10": 0.3,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.44179069980128555,
+        "num_results": 515
+      }
+    },
+    {
+      "query": "cryptocurrency regulation",
+      "type": "lexical",
+      "num_relevant": 7,
+      "bm25": {
+        "precision_at_10": 0.7,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 173
+      },
+      "semantic": {
+        "precision_at_10": 0.7,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.9950883841893561,
+        "num_results": 188
+      }
+    },
+    {
+      "query": "plant-based menu",
+      "type": "lexical",
+      "num_relevant": 8,
+      "bm25": {
+        "precision_at_10": 0.3,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.32948362433971223,
+        "num_results": 153
+      },
+      "semantic": {
+        "precision_at_10": 0.4,
+        "mrr": 0.5,
+        "ndcg_at_10": 0.42154944457839066,
+        "num_results": 168
+      }
+    },
+    {
+      "query": "sustainable tourism",
+      "type": "lexical",
+      "num_relevant": 5,
+      "bm25": {
+        "precision_at_10": 0.2,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.4371994911049732,
+        "num_results": 379
+      },
+      "semantic": {
+        "precision_at_10": 0.2,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.4371994911049732,
+        "num_results": 394
+      }
+    },
+    {
+      "query": "vaccination",
+      "type": "lexical",
+      "num_relevant": 11,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 11
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 26
+      }
+    },
+    {
+      "query": "fighting global warming with clean power",
+      "type": "semantic",
+      "num_relevant": 100,
+      "bm25": {
+        "precision_at_10": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_10": 0.0,
+        "num_results": 0
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 323
+      }
+    },
+    {
+      "query": "helping sick people get better faster",
+      "type": "semantic",
+      "num_relevant": 102,
+      "bm25": {
+        "precision_at_10": 0.0,
+        "mrr": 0.04,
+        "ndcg_at_10": 0.0,
+        "num_results": 1000
+      },
+      "semantic": {
+        "precision_at_10": 0.2,
+        "mrr": 0.2,
+        "ndcg_at_10": 0.1635413866202963,
+        "num_results": 1000
+      }
+    },
+    {
+      "query": "teaching kids to read and do math better",
+      "type": "semantic",
+      "num_relevant": 100,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 113
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 113
+      }
+    },
+    {
+      "query": "protecting the environment and reducing pollution",
+      "type": "semantic",
+      "num_relevant": 100,
+      "bm25": {
+        "precision_at_10": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_10": 0.0,
+        "num_results": 0
+      },
+      "semantic": {
+        "precision_at_10": 0.1,
+        "mrr": 0.2,
+        "ndcg_at_10": 0.08514311764162098,
+        "num_results": 195
+      }
+    },
+    {
+      "query": "keeping bank customers money and data safe",
+      "type": "semantic",
+      "num_relevant": 100,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 816
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 816
+      }
+    },
+    {
+      "query": "watching movies and TV shows at home",
+      "type": "semantic",
+      "num_relevant": 100,
+      "bm25": {
+        "precision_at_10": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_10": 0.0,
+        "num_results": 0
+      },
+      "semantic": {
+        "precision_at_10": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_10": 0.0,
+        "num_results": 126
+      }
+    },
+    {
+      "query": "planning a trip abroad and finding good hotels",
+      "type": "semantic",
+      "num_relevant": 97,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 347
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 347
+      }
+    },
+    {
+      "query": "cooking great food and running a restaurant",
+      "type": "semantic",
+      "num_relevant": 99,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 107
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 107
+      }
+    },
+    {
+      "query": "legal reforms and government policy changes",
+      "type": "semantic",
+      "num_relevant": 99,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 97
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 97
+      }
+    },
+    {
+      "query": "building software and writing good code",
+      "type": "semantic",
+      "num_relevant": 101,
+      "bm25": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 1000
+      },
+      "semantic": {
+        "precision_at_10": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_10": 1.0,
+        "num_results": 1000
+      }
+    }
+  ],
+  "summary": {
+    "overall": {
+      "bm25": {
+        "precision_at_10": 0.5549999999999999,
+        "mrr": 0.687,
+        "ndcg_at_10": 0.6351010213403623
+      },
+      "semantic": {
+        "precision_at_10": 0.625,
+        "mrr": 0.7825,
+        "ndcg_at_10": 0.7079266171386658
+      }
+    },
+    "lexical": {
+      "bm25": {
+        "precision_at_10": 0.51,
+        "mrr": 0.77,
+        "ndcg_at_10": 0.6702020426807246
+      },
+      "semantic": {
+        "precision_at_10": 0.52,
+        "mrr": 0.825,
+        "ndcg_at_10": 0.6909847838511397
+      }
+    },
+    "semantic": {
+      "bm25": {
+        "precision_at_10": 0.6,
+        "mrr": 0.604,
+        "ndcg_at_10": 0.6
+      },
+      "semantic": {
+        "precision_at_10": 0.73,
+        "mrr": 0.74,
+        "ndcg_at_10": 0.7248684504261917
+      }
+    }
+  }
+}

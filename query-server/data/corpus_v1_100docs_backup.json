@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "title": "Full Stack Developer at Juspay",
+    "company": "Juspay",
+    "location": "Remote",
+    "content": "Juspay is hiring a Full Stack Developer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/1",
+    "links": [5, 16, 37, 96]
+  },
+  {
+    "id": 2,
+    "title": "Backend Engineer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Noida",
+    "content": "Goldman Sachs is hiring a Backend Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/2",
+    "links": [19, 30]
+  },
+  {
+    "id": 3,
+    "title": "Site Reliability Engineer at Arista Networks",
+    "company": "Arista Networks",
+    "location": "Noida",
+    "content": "Arista Networks is hiring a Site Reliability Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/3",
+    "links": [15, 71, 88, 96]
+  },
+  {
+    "id": 4,
+    "title": "Site Reliability Engineer at Cisco",
+    "company": "Cisco",
+    "location": "Noida",
+    "content": "Cisco is hiring a Site Reliability Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/4",
+    "links": [56, 77]
+  },
+  {
+    "id": 5,
+    "title": "SDE Intern at Microsoft",
+    "company": "Microsoft",
+    "location": "Noida",
+    "content": "Microsoft is hiring a SDE Intern. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/5",
+    "links": [4, 13]
+  },
+  {
+    "id": 6,
+    "title": "Machine Learning Engineer at Cisco",
+    "company": "Cisco",
+    "location": "Remote",
+    "content": "Cisco is hiring a Machine Learning Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/6",
+    "links": [31, 66]
+  },
+  {
+    "id": 7,
+    "title": "Software Engineer at Atlassian",
+    "company": "Atlassian",
+    "location": "Mumbai",
+    "content": "Atlassian is hiring a Software Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/7",
+    "links": [4, 27, 73, 93]
+  },
+  {
+    "id": 8,
+    "title": "Frontend Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Hyderabad",
+    "content": "Juspay is hiring a Frontend Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/8",
+    "links": [30, 55, 71, 91]
+  },
+  {
+    "id": 9,
+    "title": "Backend Engineer at Arista Networks",
+    "company": "Arista Networks",
+    "location": "Pune",
+    "content": "Arista Networks is hiring a Backend Engineer. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/9",
+    "links": [1, 37, 77]
+  },
+  {
+    "id": 10,
+    "title": "Machine Learning Engineer at Google",
+    "company": "Google",
+    "location": "Chennai",
+    "content": "Google is hiring a Machine Learning Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/10",
+    "links": [56, 91]
+  },
+  {
+    "id": 11,
+    "title": "SDE Intern at Juspay",
+    "company": "Juspay",
+    "location": "Bangalore",
+    "content": "Juspay is hiring a SDE Intern. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/11",
+    "links": [21, 29, 37]
+  },
+  {
+    "id": 12,
+    "title": "Full Stack Developer at Meta",
+    "company": "Meta",
+    "location": "Chennai",
+    "content": "Meta is hiring a Full Stack Developer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/12",
+    "links": [13, 15, 50]
+  },
+  {
+    "id": 13,
+    "title": "Software Engineer at Uber",
+    "company": "Uber",
+    "location": "Hyderabad",
+    "content": "Uber is hiring a Software Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/13",
+    "links": [46, 47]
+  },
+  {
+    "id": 14,
+    "title": "Machine Learning Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Gurgaon",
+    "content": "Tower Research is hiring a Machine Learning Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/14",
+    "links": [6, 35, 60, 95]
+  },
+  {
+    "id": 15,
+    "title": "Systems Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Hyderabad",
+    "content": "Juspay is hiring a Systems Engineer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/15",
+    "links": [11, 17, 50, 72]
+  },
+  {
+    "id": 16,
+    "title": "Systems Engineer at Google",
+    "company": "Google",
+    "location": "Hyderabad",
+    "content": "Google is hiring a Systems Engineer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/16",
+    "links": [48, 81, 82]
+  },
+  {
+    "id": 17,
+    "title": "Systems Engineer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Pune",
+    "content": "Goldman Sachs is hiring a Systems Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/17",
+    "links": [6, 9, 26, 92]
+  },
+  {
+    "id": 18,
+    "title": "Backend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Remote",
+    "content": "Tower Research is hiring a Backend Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/18",
+    "links": [11, 31, 39, 100]
+  },
+  {
+    "id": 19,
+    "title": "SDE Intern at Amazon",
+    "company": "Amazon",
+    "location": "Pune",
+    "content": "Amazon is hiring a SDE Intern. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/19",
+    "links": [13, 50]
+  },
+  {
+    "id": 20,
+    "title": "Site Reliability Engineer at Amazon",
+    "company": "Amazon",
+    "location": "Hyderabad",
+    "content": "Amazon is hiring a Site Reliability Engineer. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/20",
+    "links": [48, 60, 83]
+  },
+  {
+    "id": 21,
+    "title": "Frontend Engineer at NVIDIA",
+    "company": "NVIDIA",
+    "location": "Gurgaon",
+    "content": "NVIDIA is hiring a Frontend Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/21",
+    "links": [47, 49]
+  },
+  {
+    "id": 22,
+    "title": "Backend Engineer at Uber",
+    "company": "Uber",
+    "location": "Hyderabad",
+    "content": "Uber is hiring a Backend Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/22",
+    "links": [36, 87]
+  },
+  {
+    "id": 23,
+    "title": "Data Engineer at Meta",
+    "company": "Meta",
+    "location": "Bangalore",
+    "content": "Meta is hiring a Data Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/23",
+    "links": [10, 79, 84, 89]
+  },
+  {
+    "id": 24,
+    "title": "Frontend Engineer at Apple",
+    "company": "Apple",
+    "location": "Bangalore",
+    "content": "Apple is hiring a Frontend Engineer. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/24",
+    "links": [22, 33, 70, 95]
+  },
+  {
+    "id": 25,
+    "title": "Software Engineer at Razorpay",
+    "company": "Razorpay",
+    "location": "Mumbai",
+    "content": "Razorpay is hiring a Software Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/25",
+    "links": [50, 61]
+  },
+  {
+    "id": 26,
+    "title": "Software Engineer at Samsung",
+    "company": "Samsung",
+    "location": "Gurgaon",
+    "content": "Samsung is hiring a Software Engineer. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/26",
+    "links": [73, 83, 90]
+  },
+  {
+    "id": 27,
+    "title": "Backend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Noida",
+    "content": "Tower Research is hiring a Backend Engineer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/27",
+    "links": [43, 89]
+  },
+  {
+    "id": 28,
+    "title": "Software Engineer at Razorpay",
+    "company": "Razorpay",
+    "location": "Remote",
+    "content": "Razorpay is hiring a Software Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/28",
+    "links": [5, 31]
+  },
+  {
+    "id": 29,
+    "title": "Frontend Engineer at Amazon",
+    "company": "Amazon",
+    "location": "Mumbai",
+    "content": "Amazon is hiring a Frontend Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/29",
+    "links": [9, 36, 53]
+  },
+  {
+    "id": 30,
+    "title": "Frontend Engineer at Cisco",
+    "company": "Cisco",
+    "location": "Noida",
+    "content": "Cisco is hiring a Frontend Engineer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/30",
+    "links": [74, 93]
+  },
+  {
+    "id": 31,
+    "title": "Backend Engineer at NVIDIA",
+    "company": "NVIDIA",
+    "location": "Chennai",
+    "content": "NVIDIA is hiring a Backend Engineer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/31",
+    "links": [28, 65, 85]
+  },
+  {
+    "id": 32,
+    "title": "Machine Learning Engineer at Qualcomm",
+    "company": "Qualcomm",
+    "location": "Mumbai",
+    "content": "Qualcomm is hiring a Machine Learning Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/32",
+    "links": [19, 60, 84]
+  },
+  {
+    "id": 33,
+    "title": "Systems Engineer at Intel",
+    "company": "Intel",
+    "location": "Bangalore",
+    "content": "Intel is hiring a Systems Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/33",
+    "links": [18, 32, 97]
+  },
+  {
+    "id": 34,
+    "title": "Systems Engineer at Rubrik",
+    "company": "Rubrik",
+    "location": "Bangalore",
+    "content": "Rubrik is hiring a Systems Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/34",
+    "links": [35, 70, 76, 97]
+  },
+  {
+    "id": 35,
+    "title": "Platform Engineer at Cisco",
+    "company": "Cisco",
+    "location": "Hyderabad",
+    "content": "Cisco is hiring a Platform Engineer. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/35",
+    "links": [48, 53, 76]
+  },
+  {
+    "id": 36,
+    "title": "Frontend Engineer at Meta",
+    "company": "Meta",
+    "location": "Noida",
+    "content": "Meta is hiring a Frontend Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/36",
+    "links": [18, 67]
+  },
+  {
+    "id": 37,
+    "title": "Software Engineer at PhonePe",
+    "company": "PhonePe",
+    "location": "Gurgaon",
+    "content": "PhonePe is hiring a Software Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/37",
+    "links": [7, 12, 98]
+  },
+  {
+    "id": 38,
+    "title": "Systems Engineer at Oracle",
+    "company": "Oracle",
+    "location": "Noida",
+    "content": "Oracle is hiring a Systems Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/38",
+    "links": [20, 82]
+  },
+  {
+    "id": 39,
+    "title": "SDE Intern at Razorpay",
+    "company": "Razorpay",
+    "location": "Hyderabad",
+    "content": "Razorpay is hiring a SDE Intern. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/39",
+    "links": [56, 89]
+  },
+  {
+    "id": 40,
+    "title": "Machine Learning Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Chennai",
+    "content": "Juspay is hiring a Machine Learning Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/40",
+    "links": [9, 50, 51, 78]
+  },
+  {
+    "id": 41,
+    "title": "Machine Learning Engineer at Intel",
+    "company": "Intel",
+    "location": "Noida",
+    "content": "Intel is hiring a Machine Learning Engineer. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/41",
+    "links": [33, 69, 72]
+  },
+  {
+    "id": 42,
+    "title": "Full Stack Developer at Cisco",
+    "company": "Cisco",
+    "location": "Bangalore",
+    "content": "Cisco is hiring a Full Stack Developer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/42",
+    "links": [89, 94]
+  },
+  {
+    "id": 43,
+    "title": "Platform Engineer at Meesho",
+    "company": "Meesho",
+    "location": "Remote",
+    "content": "Meesho is hiring a Platform Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/43",
+    "links": [70, 89]
+  },
+  {
+    "id": 44,
+    "title": "Frontend Engineer at DE Shaw",
+    "company": "DE Shaw",
+    "location": "Mumbai",
+    "content": "DE Shaw is hiring a Frontend Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/44",
+    "links": [45, 84, 100]
+  },
+  {
+    "id": 45,
+    "title": "Full Stack Developer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Hyderabad",
+    "content": "Goldman Sachs is hiring a Full Stack Developer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/45",
+    "links": [38, 57]
+  },
+  {
+    "id": 46,
+    "title": "Site Reliability Engineer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Noida",
+    "content": "Goldman Sachs is hiring a Site Reliability Engineer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/46",
+    "links": [1, 60]
+  },
+  {
+    "id": 47,
+    "title": "Full Stack Developer at Apple",
+    "company": "Apple",
+    "location": "Gurgaon",
+    "content": "Apple is hiring a Full Stack Developer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/47",
+    "links": [34, 66, 94, 99]
+  },
+  {
+    "id": 48,
+    "title": "Backend Engineer at Oracle",
+    "company": "Oracle",
+    "location": "Chennai",
+    "content": "Oracle is hiring a Backend Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/48",
+    "links": [14, 66]
+  },
+  {
+    "id": 49,
+    "title": "Backend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Noida",
+    "content": "Tower Research is hiring a Backend Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/49",
+    "links": [39, 66, 79, 83]
+  },
+  {
+    "id": 50,
+    "title": "Site Reliability Engineer at Oracle",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "content": "Oracle is hiring a Site Reliability Engineer. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/50",
+    "links": [20, 48]
+  },
+  {
+    "id": 51,
+    "title": "Site Reliability Engineer at Google",
+    "company": "Google",
+    "location": "Bangalore",
+    "content": "Google is hiring a Site Reliability Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/51",
+    "links": [69, 71]
+  },
+  {
+    "id": 52,
+    "title": "Platform Engineer at Atlassian",
+    "company": "Atlassian",
+    "location": "Gurgaon",
+    "content": "Atlassian is hiring a Platform Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/52",
+    "links": [42, 78]
+  },
+  {
+    "id": 53,
+    "title": "Systems Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Bangalore",
+    "content": "Juspay is hiring a Systems Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/53",
+    "links": [3, 15, 47]
+  },
+  {
+    "id": 54,
+    "title": "Systems Engineer at Qualcomm",
+    "company": "Qualcomm",
+    "location": "Noida",
+    "content": "Qualcomm is hiring a Systems Engineer. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/54",
+    "links": [8, 31, 74]
+  },
+  {
+    "id": 55,
+    "title": "Software Engineer at Samsung",
+    "company": "Samsung",
+    "location": "Noida",
+    "content": "Samsung is hiring a Software Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/55",
+    "links": [11, 95]
+  },
+  {
+    "id": 56,
+    "title": "Frontend Engineer at DE Shaw",
+    "company": "DE Shaw",
+    "location": "Mumbai",
+    "content": "DE Shaw is hiring a Frontend Engineer. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/56",
+    "links": [9, 70, 99]
+  },
+  {
+    "id": 57,
+    "title": "Systems Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Gurgaon",
+    "content": "Juspay is hiring a Systems Engineer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/57",
+    "links": [17, 86]
+  },
+  {
+    "id": 58,
+    "title": "Software Engineer at Intel",
+    "company": "Intel",
+    "location": "Bangalore",
+    "content": "Intel is hiring a Software Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/58",
+    "links": [22, 34, 72]
+  },
+  {
+    "id": 59,
+    "title": "Frontend Engineer at NVIDIA",
+    "company": "NVIDIA",
+    "location": "Gurgaon",
+    "content": "NVIDIA is hiring a Frontend Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/59",
+    "links": [28, 55, 71, 79]
+  },
+  {
+    "id": 60,
+    "title": "Full Stack Developer at PhonePe",
+    "company": "PhonePe",
+    "location": "Mumbai",
+    "content": "PhonePe is hiring a Full Stack Developer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/60",
+    "links": [26, 40, 90, 93]
+  },
+  {
+    "id": 61,
+    "title": "Backend Engineer at Rubrik",
+    "company": "Rubrik",
+    "location": "Remote",
+    "content": "Rubrik is hiring a Backend Engineer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/61",
+    "links": [48, 85, 87]
+  },
+  {
+    "id": 62,
+    "title": "Data Engineer at Flipkart",
+    "company": "Flipkart",
+    "location": "Chennai",
+    "content": "Flipkart is hiring a Data Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/62",
+    "links": [16, 58, 68]
+  },
+  {
+    "id": 63,
+    "title": "Site Reliability Engineer at Arista Networks",
+    "company": "Arista Networks",
+    "location": "Noida",
+    "content": "Arista Networks is hiring a Site Reliability Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/63",
+    "links": [9, 29]
+  },
+  {
+    "id": 64,
+    "title": "Backend Engineer at Rubrik",
+    "company": "Rubrik",
+    "location": "Hyderabad",
+    "content": "Rubrik is hiring a Backend Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/64",
+    "links": [3, 72, 77]
+  },
+  {
+    "id": 65,
+    "title": "SDE Intern at Microsoft",
+    "company": "Microsoft",
+    "location": "Bangalore",
+    "content": "Microsoft is hiring a SDE Intern. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/65",
+    "links": [29, 77]
+  },
+  {
+    "id": 66,
+    "title": "Software Engineer at Atlassian",
+    "company": "Atlassian",
+    "location": "Bangalore",
+    "content": "Atlassian is hiring a Software Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/66",
+    "links": [10, 92]
+  },
+  {
+    "id": 67,
+    "title": "Site Reliability Engineer at Adobe",
+    "company": "Adobe",
+    "location": "Mumbai",
+    "content": "Adobe is hiring a Site Reliability Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/67",
+    "links": [5, 8, 9, 30]
+  },
+  {
+    "id": 68,
+    "title": "Full Stack Developer at Apple",
+    "company": "Apple",
+    "location": "Hyderabad",
+    "content": "Apple is hiring a Full Stack Developer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/68",
+    "links": [10, 31, 66]
+  },
+  {
+    "id": 69,
+    "title": "Software Engineer at Samsung",
+    "company": "Samsung",
+    "location": "Pune",
+    "content": "Samsung is hiring a Software Engineer. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/69",
+    "links": [28, 63, 87]
+  },
+  {
+    "id": 70,
+    "title": "Platform Engineer at Meesho",
+    "company": "Meesho",
+    "location": "Gurgaon",
+    "content": "Meesho is hiring a Platform Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/70",
+    "links": [17, 61, 75, 94]
+  },
+  {
+    "id": 71,
+    "title": "SDE Intern at Microsoft",
+    "company": "Microsoft",
+    "location": "Mumbai",
+    "content": "Microsoft is hiring a SDE Intern. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/71",
+    "links": [53, 61]
+  },
+  {
+    "id": 72,
+    "title": "Data Engineer at Flipkart",
+    "company": "Flipkart",
+    "location": "Gurgaon",
+    "content": "Flipkart is hiring a Data Engineer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/72",
+    "links": [13, 86]
+  },
+  {
+    "id": 73,
+    "title": "Machine Learning Engineer at Uber",
+    "company": "Uber",
+    "location": "Noida",
+    "content": "Uber is hiring a Machine Learning Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/73",
+    "links": [46, 53, 55]
+  },
+  {
+    "id": 74,
+    "title": "Backend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Chennai",
+    "content": "Tower Research is hiring a Backend Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/74",
+    "links": [7, 88, 95]
+  },
+  {
+    "id": 75,
+    "title": "Data Engineer at Microsoft",
+    "company": "Microsoft",
+    "location": "Hyderabad",
+    "content": "Microsoft is hiring a Data Engineer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/75",
+    "links": [8, 13, 52, 84]
+  },
+  {
+    "id": 76,
+    "title": "SDE Intern at Microsoft",
+    "company": "Microsoft",
+    "location": "Pune",
+    "content": "Microsoft is hiring a SDE Intern. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/76",
+    "links": [14, 25, 32, 44]
+  },
+  {
+    "id": 77,
+    "title": "Site Reliability Engineer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Noida",
+    "content": "Goldman Sachs is hiring a Site Reliability Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/77",
+    "links": [58, 69]
+  },
+  {
+    "id": 78,
+    "title": "Full Stack Developer at Atlassian",
+    "company": "Atlassian",
+    "location": "Bangalore",
+    "content": "Atlassian is hiring a Full Stack Developer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/78",
+    "links": [24, 55]
+  },
+  {
+    "id": 79,
+    "title": "Backend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Remote",
+    "content": "Tower Research is hiring a Backend Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/79",
+    "links": [10, 32, 60]
+  },
+  {
+    "id": 80,
+    "title": "Backend Engineer at NVIDIA",
+    "company": "NVIDIA",
+    "location": "Pune",
+    "content": "NVIDIA is hiring a Backend Engineer. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/80",
+    "links": [7, 13, 71]
+  },
+  {
+    "id": 81,
+    "title": "Frontend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Mumbai",
+    "content": "Tower Research is hiring a Frontend Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/81",
+    "links": [2, 12, 70, 98]
+  },
+  {
+    "id": 82,
+    "title": "Software Engineer at Samsung",
+    "company": "Samsung",
+    "location": "Gurgaon",
+    "content": "Samsung is hiring a Software Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/82",
+    "links": [22, 53]
+  },
+  {
+    "id": 83,
+    "title": "Systems Engineer at Flipkart",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "content": "Flipkart is hiring a Systems Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/83",
+    "links": [28, 52, 62]
+  },
+  {
+    "id": 84,
+    "title": "Site Reliability Engineer at Arista Networks",
+    "company": "Arista Networks",
+    "location": "Noida",
+    "content": "Arista Networks is hiring a Site Reliability Engineer. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/84",
+    "links": [22, 49]
+  },
+  {
+    "id": 85,
+    "title": "Backend Engineer at Google",
+    "company": "Google",
+    "location": "Remote",
+    "content": "Google is hiring a Backend Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/85",
+    "links": [34, 50]
+  },
+  {
+    "id": 86,
+    "title": "Machine Learning Engineer at Meesho",
+    "company": "Meesho",
+    "location": "Hyderabad",
+    "content": "Meesho is hiring a Machine Learning Engineer. Candidates should have strong knowledge of cloud computing, Kubernetes, data structures, distributed systems, and Java. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/86",
+    "links": [37, 55, 91]
+  },
+  {
+    "id": 87,
+    "title": "Systems Engineer at Razorpay",
+    "company": "Razorpay",
+    "location": "Noida",
+    "content": "Razorpay is hiring a Systems Engineer. Candidates should have strong knowledge of Docker, Linux, algorithms, Python, and C++. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/87",
+    "links": [63, 72, 85, 93]
+  },
+  {
+    "id": 88,
+    "title": "Platform Engineer at Walmart Global Tech",
+    "company": "Walmart Global Tech",
+    "location": "Chennai",
+    "content": "Walmart Global Tech is hiring a Platform Engineer. Candidates should have strong knowledge of Kubernetes, data structures, distributed systems, Java, and operating systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/88",
+    "links": [25, 38]
+  },
+  {
+    "id": 89,
+    "title": "Software Engineer at DE Shaw",
+    "company": "DE Shaw",
+    "location": "Pune",
+    "content": "DE Shaw is hiring a Software Engineer. Candidates should have strong knowledge of Linux, algorithms, Python, C++, and computer networks. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/89",
+    "links": [8, 75]
+  },
+  {
+    "id": 90,
+    "title": "Data Engineer at Qualcomm",
+    "company": "Qualcomm",
+    "location": "Bangalore",
+    "content": "Qualcomm is hiring a Data Engineer. Candidates should have strong knowledge of data structures, distributed systems, Java, operating systems, and databases. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/90",
+    "links": [8, 41, 70, 97]
+  },
+  {
+    "id": 91,
+    "title": "Full Stack Developer at Amazon",
+    "company": "Amazon",
+    "location": "Chennai",
+    "content": "Amazon is hiring a Full Stack Developer. Candidates should have strong knowledge of algorithms, Python, C++, computer networks, and system design. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/91",
+    "links": [7, 75]
+  },
+  {
+    "id": 92,
+    "title": "Software Engineer at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Hyderabad",
+    "content": "Goldman Sachs is hiring a Software Engineer. Candidates should have strong knowledge of distributed systems, Java, operating systems, databases, and machine learning. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/92",
+    "links": [21, 65, 68]
+  },
+  {
+    "id": 93,
+    "title": "Frontend Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Chennai",
+    "content": "Tower Research is hiring a Frontend Engineer. Candidates should have strong knowledge of Python, C++, computer networks, system design, and cloud computing. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/93",
+    "links": [11, 66]
+  },
+  {
+    "id": 94,
+    "title": "Site Reliability Engineer at Microsoft",
+    "company": "Microsoft",
+    "location": "Noida",
+    "content": "Microsoft is hiring a Site Reliability Engineer. Candidates should have strong knowledge of Java, operating systems, databases, machine learning, and Docker. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/94",
+    "links": [9, 77]
+  },
+  {
+    "id": 95,
+    "title": "Systems Engineer at Juspay",
+    "company": "Juspay",
+    "location": "Chennai",
+    "content": "Juspay is hiring a Systems Engineer. Candidates should have strong knowledge of C++, computer networks, system design, cloud computing, and Kubernetes. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/95",
+    "links": [31, 87]
+  },
+  {
+    "id": 96,
+    "title": "Frontend Engineer at Meta",
+    "company": "Meta",
+    "location": "Bangalore",
+    "content": "Meta is hiring a Frontend Engineer. Candidates should have strong knowledge of operating systems, databases, machine learning, Docker, and Linux. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/96",
+    "links": [16, 32, 73]
+  },
+  {
+    "id": 97,
+    "title": "Machine Learning Engineer at Tower Research",
+    "company": "Tower Research",
+    "location": "Pune",
+    "content": "Tower Research is hiring a Machine Learning Engineer. Candidates should have strong knowledge of computer networks, system design, cloud computing, Kubernetes, and data structures. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/97",
+    "links": [6, 11, 77, 80]
+  },
+  {
+    "id": 98,
+    "title": "Machine Learning Engineer at Google",
+    "company": "Google",
+    "location": "Chennai",
+    "content": "Google is hiring a Machine Learning Engineer. Candidates should have strong knowledge of databases, machine learning, Docker, Linux, and algorithms. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/98",
+    "links": [73, 75, 85]
+  },
+  {
+    "id": 99,
+    "title": "SDE Intern at Goldman Sachs",
+    "company": "Goldman Sachs",
+    "location": "Hyderabad",
+    "content": "Goldman Sachs is hiring a SDE Intern. Candidates should have strong knowledge of system design, cloud computing, Kubernetes, data structures, and distributed systems. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/99",
+    "links": [27, 34, 41, 86]
+  },
+  {
+    "id": 100,
+    "title": "Data Engineer at NVIDIA",
+    "company": "NVIDIA",
+    "location": "Mumbai",
+    "content": "NVIDIA is hiring a Data Engineer. Candidates should have strong knowledge of machine learning, Docker, Linux, algorithms, and Python. Experience building scalable software, writing clean code, collaborating in teams, and solving challenging engineering problems is preferred.",
+    "url": "https://example.com/jobs/100",
+    "links": [31, 34, 41, 51]
+  }
+]
