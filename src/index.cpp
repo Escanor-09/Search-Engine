@@ -1,6 +1,7 @@
 #include "index.h"
 #include "endian_utils.h"
 #include "stemmer.h"
+#include <algorithm>
 #include <iomanip>
 #include <map>
 #include <cmath>
@@ -12,7 +13,8 @@ struct TemporaryWordData
     std::map<int32_t, std::vector<int32_t>> docMatches;
 };
 
-void InvertedIndex::build(const std::vector<Document> &documents, Tokenizer &tokenizer)
+void InvertedIndex::build(const std::vector<Document> &documents, Tokenizer &tokenizer,
+                           const std::unordered_map<std::string, float> &pageRanks)
 {
     std::map<std::string, TemporaryWordData> stagingMap;
 
@@ -30,6 +32,8 @@ void InvertedIndex::build(const std::vector<Document> &documents, Tokenizer &tok
 
         docLengths[document.id] = n;
         docUrls[document.id] = document.url;
+        auto pageRankIt = pageRanks.find(document.url);
+        docPageRanks[document.id] = pageRankIt != pageRanks.end() ? pageRankIt->second : 0.0f;
         globalTotalTokens += n;
 
         for (int32_t i = 0; i < n; i++)
@@ -131,6 +135,10 @@ std::vector<SearchResult> InvertedIndex::searchBM25(const std::string &word) con
     uint32_t dictIdx = lookupIt->second;
     const auto &record = termDictionary[dictIdx];
 
+    // Combination weights for final = alpha*normalize(BM25) + beta*normalize(PageRank)
+    const double alpha = 0.7;
+    const double beta = 0.3;
+
     // BM25 Constatns (statndard industry tuning choices)
     const double k1 = 1.2;
     const double b = 0.75;
@@ -161,7 +169,40 @@ std::vector<SearchResult> InvertedIndex::searchBM25(const std::string &word) con
         rankedResults.push_back(res);
     }
 
-    // sort the results from highest BM25 score to lowest BM25 score
+    // Combine BM25 with PageRank: final = alpha*normalize(BM25) + beta*normalize(PageRank).
+    // BM25 is normalized within this query's candidate set (raw magnitude is
+    // query-dependent); PageRank is normalized across the whole corpus (it doesn't
+    // depend on the query).
+    double minBM = rankedResults.front().score, maxBM = rankedResults.front().score;
+    for (const auto &res : rankedResults)
+    {
+        minBM = std::min(minBM, res.score);
+        maxBM = std::max(maxBM, res.score);
+    }
+
+    double minPR = 0.0, maxPR = 0.0;
+    if (!docPageRanks.empty())
+    {
+        auto [minIt, maxIt] = std::minmax_element(
+            docPageRanks.begin(), docPageRanks.end(),
+            [](const auto &a, const auto &b)
+            { return a.second < b.second; });
+        minPR = minIt->second;
+        maxPR = maxIt->second;
+    }
+
+    for (auto &res : rankedResults)
+    {
+        double normBM = (maxBM > minBM) ? (res.score - minBM) / (maxBM - minBM) : 1.0;
+
+        auto prIt = docPageRanks.find(res.docId);
+        double pageRank = (prIt != docPageRanks.end()) ? prIt->second : 0.0;
+        double normPR = (maxPR > minPR) ? (pageRank - minPR) / (maxPR - minPR) : 0.0;
+
+        res.score = alpha * normBM + beta * normPR;
+    }
+
+    // sort the results from highest combined score to lowest
     std::sort(rankedResults.begin(), rankedResults.end(), [](const SearchResult &a, const SearchResult &b)
               { return a.score > b.score; });
 
@@ -178,9 +219,9 @@ bool InvertedIndex::saveToDisk(const std::string &filepath) const
     uint64_t headerStartPos = out.tellp();
     char magicBytes[8] = {'M', 'Y', 'E', 'N', 'G', 'I', 'N', 'E'};
     out.write(magicBytes, 8);
-    EndianUtils::writeLE32(out, 1);
+    EndianUtils::writeLE32(out, 2);
 
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 7; i++)
     {
         EndianUtils::writeLE64(out, 0);
     }
@@ -262,6 +303,22 @@ bool InvertedIndex::saveToDisk(const std::string &filepath) const
         out.write(url.data(), urlLen);
     }
 
+    // Explicitly write docPageRanks Map
+    uint64_t pageRanksOffset = out.tellp();
+    EndianUtils::writeLE64(out, docPageRanks.size());
+    for (const auto &[id, pageRank] : docPageRanks)
+    {
+        EndianUtils::writeLE32(out, id);
+
+        union
+        {
+            float f;
+            uint32_t u;
+        } pageRankConverter;
+        pageRankConverter.f = pageRank;
+        EndianUtils::writeLE32(out, pageRankConverter.u);
+    }
+
     // seek back and write genuine completed index offsets safely
     out.seekp(headerStartPos + 12);
     EndianUtils::writeLE64(out, globalStatsOffset);
@@ -270,6 +327,7 @@ bool InvertedIndex::saveToDisk(const std::string &filepath) const
     EndianUtils::writeLE64(out, docLengthsOffset);
     EndianUtils::writeLE64(out, dictionaryOffset);
     EndianUtils::writeLE64(out, docUrlsOffset);
+    EndianUtils::writeLE64(out, pageRanksOffset);
 
     return true;
 }
@@ -289,7 +347,7 @@ bool InvertedIndex::loadFromDisk(const std::string &filepath)
     }
 
     uint32_t version = EndianUtils::readLE32(in);
-    if (version != 1)
+    if (version != 2)
         return false;
 
     uint64_t globalStatsOffset = EndianUtils::readLE64(in);
@@ -298,12 +356,14 @@ bool InvertedIndex::loadFromDisk(const std::string &filepath)
     uint64_t docLengthOffset = EndianUtils::readLE64(in);
     uint64_t dictionaryOffset = EndianUtils::readLE64(in);
     uint64_t docUrlsOffset = EndianUtils::readLE64(in);
+    uint64_t pageRanksOffset = EndianUtils::readLE64(in);
 
     termDictionary.clear();
     globalPostingPool.clear();
     globalPositionsPool.clear();
     docLengths.clear();
     docUrls.clear();
+    docPageRanks.clear();
     termLookupTable.clear();
 
     // Load Global stats
@@ -390,6 +450,22 @@ bool InvertedIndex::loadFromDisk(const std::string &filepath)
         std::string tempUrl(urlLen, '\0');
         in.read(tempUrl.data(), urlLen);
         docUrls[id] = std::move(tempUrl);
+    }
+
+    // Load docPageRanks Map explicitly
+    in.seekg(pageRanksOffset);
+    size_t pageRankMapSize = EndianUtils::readLE64(in);
+    for (size_t i = 0; i < pageRankMapSize; i++)
+    {
+        int32_t id = static_cast<int32_t>(EndianUtils::readLE32(in));
+
+        union
+        {
+            uint32_t u;
+            float f;
+        } pageRankConverter;
+        pageRankConverter.u = EndianUtils::readLE32(in);
+        docPageRanks[id] = pageRankConverter.f;
     }
 
     return !in.bad();

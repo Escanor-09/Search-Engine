@@ -10,8 +10,9 @@ int main()
     Tokenizer tokenizer;
     InvertedIndex invertedIndex;
 
-    auto docs = parser.parseDirectory("data/docs");
-    invertedIndex.build(docs, tokenizer);
+    auto docs = parser.parseDatabase("data/crawler.db");
+    auto pageRanks = parser.loadPageRanks("data/crawler.db");
+    invertedIndex.build(docs, tokenizer, pageRanks);
     invertedIndex.printInvertedIndex();
 
     std::cout << "--------------##--------------\n";
@@ -56,7 +57,7 @@ int main()
         for (const auto &res : results)
         {
             std::cout << "Doc ID: " << std::left << std::setw(5) << res.docId
-                      << " | BM25 Relevance Score: " << std::fixed << std::setprecision(4) << std::setw(8) << res.score
+                      << " | Relevance Score: " << std::fixed << std::setprecision(4) << std::setw(8) << res.score
                       << " | URL: " << res.url << "\n";
         }
         std::cout << "------------------------------------------------\n";

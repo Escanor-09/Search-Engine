@@ -1,54 +1,83 @@
 #include "parser.h"
-#include <fstream>   //to open and read file
 #include <stdexcept> //handle and throw exception
-#include <filesystem>
-#include <nlohmann/json.hpp> //JSON library
+#include <sqlite3.h>
+#include <iostream>
 
-using json = nlohmann::json;
-namespace fs = std::filesystem;
-
-Document Parser::parseFile(const std::string &filename)
+std::vector<Document> Parser::parseDatabase(const std::string &dbPath)
 {
-    // open the file
-    std::ifstream file(filename);
-
-    // if file does not exist or can not be opened
-    if (!file)
+    sqlite3 *db = nullptr;
+    if (sqlite3_open(dbPath.c_str(), &db) != SQLITE_OK)
     {
-        throw std::runtime_error("Unable to open file: " + filename);
+        std::string error = sqlite3_errmsg(db);
+        sqlite3_close(db);
+        throw std::runtime_error("Failed to open the database " + error);
     }
 
-    json j;
+    const char *sql = "SELECT id,url,title,content FROM pages;";
 
-    // this helps prevent manually parsing the file which is done using the json library
-    file >> j;
+    sqlite3_stmt *stmt = nullptr;
 
-    return {
-        j.at("id").get<int>(),
-        j.at("url").get<std::string>(),
-        j.at("title").get<std::string>(),
-        j.at("content").get<std::string>()};
-}
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::string error = sqlite3_errmsg(db);
+        sqlite3_close(db);
+        throw std::runtime_error("Failed to prepare query: " + error);
+    }
 
-std::vector<Document> Parser::parseDirectory(const std::string &directory)
-{
     std::vector<Document> documents;
 
-    for (const auto &entry : fs::directory_iterator(directory))
+    while (sqlite3_step(stmt) == SQLITE_ROW)
     {
-        if (!entry.is_regular_file())
-            continue;
-        if (entry.path().extension() != ".json")
-            continue;
+        int32_t id = sqlite3_column_int(stmt, 0);
+        const char *url = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
+        const char *title = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2));
+        const char *content = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3));
 
-        try
+        documents.emplace_back(id, url ? url : "", title ? title : "", content ? content : "");
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return documents;
+}
+
+std::unordered_map<std::string, float> Parser::loadPageRanks(const std::string &dbPath)
+{
+    std::unordered_map<std::string, float> pageRanks;
+
+    sqlite3 *db = nullptr;
+    if (sqlite3_open(dbPath.c_str(), &db) != SQLITE_OK)
+    {
+        std::string error = sqlite3_errmsg(db);
+        sqlite3_close(db);
+        throw std::runtime_error("Failed to open the database " + error);
+    }
+
+    const char *sql = "SELECT url, score FROM pagerank;";
+
+    sqlite3_stmt *stmt = nullptr;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        // `pagerank` table doesn't exist yet (crawler/ranking/pagerank.py hasn't been
+        // run) -- degrade gracefully to BM25-only rather than failing the whole engine.
+        std::cerr << "Warning: no `pagerank` table found, ranking with BM25 only.\n";
+        sqlite3_close(db);
+        return pageRanks;
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        const char *url = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        double score = sqlite3_column_double(stmt, 1);
+
+        if (url)
         {
-            documents.push_back(parseFile(entry.path().string()));
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << "Failed to parse " << entry.path() << ": " << e.what() << "\n";
+            pageRanks[url] = static_cast<float>(score);
         }
     }
-    return documents;
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return pageRanks;
 }

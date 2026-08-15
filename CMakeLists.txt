@@ -25,6 +25,10 @@ target_include_directories(search_engine
         ${PROJECT_SOURCE_DIR}/include
 )
 
+target_link_libraries(
+    search_engine PRIVATE sqlite3
+)
+
 target_link_libraries(search_engine 
     PRIVATE 
         ${STEMMER_LIB}

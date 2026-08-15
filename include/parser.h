@@ -1,11 +1,12 @@
 #pragma once
 #include "document.h"
 #include <iostream>
+#include <unordered_map>
 #include <vector>
 
 class Parser
 {
 public:
-    Document parseFile(const std::string &filename);
-    std::vector<Document> parseDirectory(const std::string &directory);
+    std::vector<Document> parseDatabase(const std::string &dbPath);
+    std::unordered_map<std::string, float> loadPageRanks(const std::string &dbPath);
 };

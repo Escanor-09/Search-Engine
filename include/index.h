@@ -42,11 +42,13 @@ private:
 
     std::unordered_map<int32_t, uint32_t> docLengths;
     std::unordered_map<int32_t, std::string> docUrls;
+    std::unordered_map<int32_t, float> docPageRanks;
     double avgDocLength = 0.0;
     size_t totalDocsCount = 0;
 
 public:
-    void build(const std::vector<Document> &document, Tokenizer &tokenizer);
+    void build(const std::vector<Document> &document, Tokenizer &tokenizer,
+               const std::unordered_map<std::string, float> &pageRanks = {});
 
     std::vector<SearchResult> searchBM25(const std::string &word) const;
 

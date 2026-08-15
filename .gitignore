@@ -20,3 +20,15 @@ search_engine
 # IDE
 .vscode/
 .idea/
+
+# Python (crawler/)
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Crawler's generated data (crawl DB, raw HTML) — not source, not versioned
+crawler/data/
+
+# Symlinked to crawler/data/crawler.db — not versioned here
+data/crawler.db
