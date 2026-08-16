@@ -4,6 +4,12 @@
 > Part 1 is general search-engine theory. Part 2 dissects the crawler in this repo.
 > Part 3 is the build order for everything still missing.
 
+> [!tip] Companion document
+> `CONCEPTS.md` covers the *implementation* mechanisms in depth — Bloom filters and their
+> sizing maths, per-domain scheduling, termination detection, lock discipline, crawl traps —
+> each explained from first principles, with a cheat sheet at the end. Read that for the
+> crawler internals; read this for the search engine as a whole.
+
 ---
 
 # Part 1 — How Search Engines Work

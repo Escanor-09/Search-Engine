@@ -20,8 +20,8 @@ SEED_URLS = [
     "https://github.com/explore",
 ]
 
-MAX_PAGES = 200  # Safety fallback; MAX_SIZE is usually the binding limit
-MAX_SIZE = 3072  # Session-wide download budget, in MB
+MAX_PAGES = 19760  # Safety fallback; MAX_SIZE is usually the binding limit
+MAX_SIZE = 4096  # Session-wide download budget, in MB
 MAX_DEPTH = None  # None = unbounded; link distance from a seed
 MAX_WORKERS = 8
 
@@ -32,6 +32,23 @@ MAX_PAGE_SIZE_MB = 5  # Per-page cap, distinct from the MAX_SIZE session budget
 
 RESPECT_ROBOTS_TXT = True
 CRAWL_DELAY_DEFAULT = 1.0  # Seconds between requests to the same domain
+
+# --- Seen-URL Bloom filter -------------------------------------------------
+# The set of already-seen URLs is the one structure that grows without bound.
+# A Bloom filter stores it in a fixed number of bits instead: 5M URLs costs
+# ~6 MB here, versus ~500 MB for a Python set of the same URL strings.
+# Trade-off: ~1% of discovered URLs are wrongly reported as already seen and
+# are silently skipped. See CONCEPTS.md for the full explanation.
+SEEN_CAPACITY = 5_000_000  # URLs the filter is sized for; FPR degrades past this
+SEEN_FP_RATE = 0.01  # Target false-positive rate at capacity
+
+# --- Crawl-trap limits -----------------------------------------------------
+# An infinite calendar (/events/2024/01/next/next/next/...) generates unlimited
+# distinct URLs and will otherwise swallow the entire page budget.
+MAX_PAGES_PER_DOMAIN = 5000  # Stop discovering new URLs on a host past this
+MAX_QUEUE_PER_DOMAIN = 20000  # Cap a single host's in-memory queue
+MAX_PATH_DEPTH = 10  # Reject /a/b/c/... deeper than this
+MAX_REPEATED_SEGMENTS = 2  # Reject /next/next/next (a segment repeated 3+ times)
 
 # Empty means unrestricted: the crawler roams across any domain it discovers.
 ALLOWED_DOMAINS = []

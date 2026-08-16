@@ -42,6 +42,20 @@ def test_is_crawlable(url, ok):
     assert Parser.is_crawlable(url) is ok
 
 
+@pytest.mark.parametrize("url,ok", [
+    # A deep but sane hierarchy is fine.
+    ("https://example.com/a/b/c/d/e", True),
+    # Past MAX_PATH_DEPTH (10) it is almost certainly generated.
+    ("https://example.com/" + "/".join("abcdefghijkl"), False),
+    # Repetition is the giveaway of a "next page" loop.
+    ("https://example.com/events/next/next/next", False),
+    # Twice is not a loop -- /docs/api/docs/api is a legitimate shape.
+    ("https://example.com/docs/api/docs/api", True),
+])
+def test_is_crawlable_rejects_crawl_traps(url, ok):
+    assert Parser.is_crawlable(url) is ok
+
+
 def test_allowed_domains_restriction(monkeypatch):
     import config
     monkeypatch.setattr(config, "ALLOWED_DOMAINS", ["example.com"])
@@ -54,7 +68,7 @@ HTML = """
 <html>
   <head><title>  Test Page  </title></head>
   <body>
-    <nav>Menu Junk</nav>
+    <nav>Menu Junk <a href="/nav-target">nav link</a></nav>
     <script>var x = 1;</script>
     <style>.a{color:red}</style>
     <p>Real content here.</p>
@@ -70,20 +84,30 @@ HTML = """
 
 
 def test_extract_pulls_title_and_strips_chrome():
-    title, text, links = Parser.extract("https://example.com/start", HTML)
-    assert title == "Test Page"
-    assert "Real content here." in text
-    assert "Menu Junk" not in text
-    assert "Footer Junk" not in text
-    assert "var x" not in text
+    page = Parser.extract("https://example.com/start", HTML)
+    assert page.title == "Test Page"
+    assert "Real content here." in page.text
+    assert "Menu Junk" not in page.text
+    assert "Footer Junk" not in page.text
+    assert "var x" not in page.text
 
 
 def test_extract_filters_and_normalizes_links():
-    _, _, links = Parser.extract("https://example.com/start", HTML)
-    assert links == {
+    page = Parser.extract("https://example.com/start", HTML)
+    assert page.links == {
         "https://example.com/relative",
         "https://other.com/page",
+        # Navigation is junk as text but a real edge in the graph, so the link
+        # survives even though the surrounding text does not.
+        "https://example.com/nav-target",
     }
+
+
+def test_extract_excludes_self_link():
+    page = Parser.extract(
+        "https://example.com/a", '<a href="https://example.com/a">self</a>'
+    )
+    assert page.links == set()
 
 
 @pytest.mark.parametrize("html,expected", [
@@ -93,17 +117,67 @@ def test_extract_filters_and_normalizes_links():
     ("<html><body>no title anywhere</body></html>", "my page"),
 ])
 def test_title_falls_back_never_blank(html, expected):
-    title, _, _ = Parser.extract("https://example.com/my-page", html)
-    assert title == expected
+    page = Parser.extract("https://example.com/my-page", html)
+    assert page.title == expected
 
 
 def test_title_falls_back_to_domain_for_root():
-    title, _, _ = Parser.extract("https://example.com/", "<html><body>x</body></html>")
-    assert title == "example.com"
+    page = Parser.extract("https://example.com/", "<html><body>x</body></html>")
+    assert page.title == "example.com"
 
 
-def test_extract_excludes_self_link():
-    _, _, links = Parser.extract(
-        "https://example.com/a", '<a href="https://example.com/a">self</a>'
-    )
-    assert links == set()
+# --- HTML-level directives -------------------------------------------------
+
+def test_base_href_rebases_relative_links():
+    html = """
+    <html><head><base href="https://cdn.example.com/docs/"></head>
+    <body><a href="intro">intro</a></body></html>
+    """
+    page = Parser.extract("https://example.com/page", html)
+    assert page.links == {"https://cdn.example.com/docs/intro"}
+
+
+def test_canonical_is_extracted_and_normalized():
+    html = """
+    <html><head><link rel="canonical" href="https://example.com/real?utm_source=x">
+    </head><body>text</body></html>
+    """
+    page = Parser.extract("https://example.com/alias", html)
+    assert page.canonical == "https://example.com/real"
+
+
+def test_canonical_absent_is_none():
+    page = Parser.extract("https://example.com/a", "<html><body>text</body></html>")
+    assert page.canonical is None
+
+
+@pytest.mark.parametrize("content,noindex", [
+    ("noindex", True),
+    ("NOINDEX, follow", True),
+    ("none", True),
+    ("index, follow", False),
+])
+def test_meta_robots_noindex(content, noindex):
+    html = f'<html><head><meta name="robots" content="{content}"></head><body>t</body></html>'
+    assert Parser.extract("https://example.com/a", html).noindex is noindex
+
+
+def test_meta_robots_nofollow_drops_all_links():
+    html = """
+    <html><head><meta name="robots" content="nofollow"></head>
+    <body><a href="/one">1</a><a href="/two">2</a></body></html>
+    """
+    page = Parser.extract("https://example.com/a", html)
+    assert page.links == set()
+    assert page.noindex is False
+
+
+def test_rel_nofollow_drops_only_that_link():
+    html = """
+    <html><body>
+      <a href="/followed">yes</a>
+      <a href="/paid" rel="nofollow">no</a>
+    </body></html>
+    """
+    page = Parser.extract("https://example.com/a", html)
+    assert page.links == {"https://example.com/followed"}

@@ -32,3 +32,4 @@ crawler/data/
 
 # Symlinked to crawler/data/crawler.db — not versioned here
 data/crawler.db
+data/index.bin

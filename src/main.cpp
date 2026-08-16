@@ -13,7 +13,7 @@ int main()
     auto docs = parser.parseDatabase("data/crawler.db");
     auto pageRanks = parser.loadPageRanks("data/crawler.db");
     invertedIndex.build(docs, tokenizer, pageRanks);
-    invertedIndex.printInvertedIndex();
+    // invertedIndex.printInvertedIndex();
 
     std::cout << "--------------##--------------\n";
 

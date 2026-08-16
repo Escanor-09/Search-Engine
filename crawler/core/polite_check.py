@@ -82,6 +82,32 @@ class PoliteChecker:
             logger.debug(f"robots.txt check failed for {url} ({e}); allowing")
             return True
 
+    def cached_delay(self, domain):
+        """This domain's crawl delay, read from cache only -- never fetches.
+
+        The frontier's scheduler needs a delay while holding its own lock, and
+        doing HTTP under a lock would stall every worker. So an unknown domain
+        just gets the default; once the first worker to reach that host has
+        fetched robots.txt, later scheduling decisions use the real value.
+
+        Lock order is Frontier.lock -> _robots_lock. Nothing here ever reaches
+        back for the frontier's lock, so the two cannot deadlock.
+        """
+        if not config.RESPECT_ROBOTS_TXT:
+            return config.CRAWL_DELAY_DEFAULT
+
+        with self._robots_lock:
+            parser = self._robots.get(domain)
+
+        if parser is None:
+            return config.CRAWL_DELAY_DEFAULT
+
+        try:
+            delay = parser.crawl_delay(self.user_agent)
+        except Exception:
+            delay = None
+        return max(float(delay), config.CRAWL_DELAY_DEFAULT) if delay else config.CRAWL_DELAY_DEFAULT
+
     def _delay_for(self, url):
         if not config.RESPECT_ROBOTS_TXT:
             return config.CRAWL_DELAY_DEFAULT

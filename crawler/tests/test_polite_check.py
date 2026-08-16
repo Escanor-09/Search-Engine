@@ -52,6 +52,25 @@ def test_default_delay_when_robots_silent(polite):
     assert polite._delay_for("https://example.com/a") == config.CRAWL_DELAY_DEFAULT
 
 
+def test_cached_delay_uses_robots_when_known(polite):
+    _preload(polite, "example.com", ROBOTS)
+    assert polite.cached_delay("example.com") == 2.0
+
+
+def test_cached_delay_never_fetches(polite, monkeypatch):
+    """The frontier calls this while holding its lock, so it must not do I/O."""
+    import config
+    import core.polite_check as module
+
+    def explode(*args, **kwargs):
+        raise AssertionError("cached_delay must not touch the network")
+
+    monkeypatch.setattr(module.requests, "get", explode)
+
+    assert polite.cached_delay("never-seen.com") == config.CRAWL_DELAY_DEFAULT
+    assert polite._robots == {}
+
+
 def test_wait_if_needed_spaces_same_domain_requests(polite, monkeypatch):
     import config
     monkeypatch.setattr(config, "RESPECT_ROBOTS_TXT", False)

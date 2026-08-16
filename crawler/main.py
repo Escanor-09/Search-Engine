@@ -39,15 +39,16 @@ class Stats:
 
 
 def _process_url(url, depth, frontier, fetcher, parser, storage, polite, stats):
-    if frontier.is_visited(url):
-        return
-    frontier.mark_visited(url)
-
+    # No visited-check here: the frontier's Bloom filter dedups at enqueue time,
+    # so a URL reaches this function at most once.
     if not polite.can_fetch(url):
         logger.debug(f"Blocked by robots.txt: {url}")
         storage.mark_frontier_status(url, "failed", depth)
         return
 
+    # The frontier has already spaced this domain out; this is the backstop that
+    # enforces a robots.txt Crawl-delay the scheduler had not yet learned of, so
+    # it normally sleeps for zero seconds.
     polite.wait_if_needed(url)
 
     result = fetcher.download(url)
@@ -56,13 +57,34 @@ def _process_url(url, depth, frontier, fetcher, parser, storage, polite, stats):
         storage.mark_frontier_status(url, "failed", depth)
         return
 
-    title, text, links = parser.extract(result.final_url, result.html)
+    # Where the content actually came from. Filing it under the requested URL
+    # would store B's content under A and then crawl B again as a fresh page.
+    final_url = Parser.normalize_url(result.final_url) or url
+    if final_url != url:
+        storage.record_redirect(url, final_url, depth)
+        frontier.mark_seen(final_url)
+
+    page = parser.extract(final_url, result.html)
+
+    # A site's own <link rel="canonical"> outranks whichever alias we requested.
+    store_url = page.canonical or final_url
+    if store_url != final_url:
+        frontier.mark_seen(store_url)
+
+    if page.noindex or not page.text.strip():
+        # Nothing worth indexing, but its links are still worth following. Only
+        # the frontier rows are persisted, not graph edges -- a noindex page is
+        # typically a login or search form and casts no meaningful vote.
+        storage.add_frontier_urls([(link, depth + 1) for link in page.links])
+        storage.mark_frontier_status(store_url, "visited", depth)
+        frontier.add_urls(page.links, depth + 1)
+        return
 
     saved = storage.save(
-        url=url,
-        title=title,
-        content=text,
-        links=links,
+        url=store_url,
+        title=page.title,
+        content=page.text,
+        links=page.links,
         html=result.html,
         status_code=result.status_code,
         depth=depth,
@@ -71,13 +93,16 @@ def _process_url(url, depth, frontier, fetcher, parser, storage, polite, stats):
         storage.mark_frontier_status(url, "failed", depth)
         return
 
-    frontier.add_urls(links, depth + 1)
-    count = stats.record_page(len(links), result.content_length)
+    # Persist first, enqueue second: everything in the frontier is then already
+    # durable, so a crash loses no discovered URLs.
+    frontier.add_urls(page.links, depth + 1)
+    count = stats.record_page(len(page.links), result.content_length)
 
     if count % 10 == 0 or count <= 5:
         logger.info(
-            f"[{count}/{config.MAX_PAGES}] {url} "
-            f"({len(links)} links, queue={frontier.pending_count()})"
+            f"[{count}/{config.MAX_PAGES}] {store_url} "
+            f"({len(page.links)} links, queue={frontier.pending_count()}, "
+            f"domains={frontier.domain_count()})"
         )
 
 
@@ -112,10 +137,12 @@ def run_crawler():
     )
 
     storage = Storage(config.DB_PATH)
-    frontier = Frontier(config.SEED_URLS, storage=storage)
+    polite = PoliteChecker(config.USER_AGENT)
+    # The frontier schedules by domain, so it needs to know each domain's crawl
+    # delay -- read from PoliteChecker's cache only, never fetched under its lock.
+    frontier = Frontier(config.SEED_URLS, storage=storage, polite=polite)
     fetcher = Fetcher(config.USER_AGENT)
     parser = Parser()
-    polite = PoliteChecker(config.USER_AGENT)
     stats = Stats()
     stop_event = threading.Event()
 
@@ -149,7 +176,7 @@ def run_crawler():
 
     pages, links, downloaded, failed = stats.snapshot()
     elapsed = time.monotonic() - stats.started
-    total_pages, total_links = storage.stats()
+    total_pages, total_links, total_dupes = storage.stats()
     storage.close()
 
     logger.info("-" * 60)
@@ -157,7 +184,10 @@ def run_crawler():
     logger.info(f"Links    : {links} edges discovered this session")
     logger.info(f"Data     : {downloaded / 1024 / 1024:.1f} MB in {elapsed:.1f}s "
                 f"({pages / elapsed if elapsed else 0:.2f} pages/sec)")
-    logger.info(f"Database : {total_pages} pages, {total_links} link edges total")
+    logger.info(f"Database : {total_pages} pages ({total_dupes} duplicates), "
+                f"{total_links} link edges total")
+    logger.info(f"Seen     : {len(frontier.seen)} URLs in "
+                f"{frontier.seen.memory_bytes() / 1024 / 1024:.1f} MB of Bloom filter")
 
 
 if __name__ == '__main__':

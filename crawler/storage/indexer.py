@@ -19,6 +19,10 @@ CREATE TABLE IF NOT EXISTS pages (
     content_length INTEGER,
     depth INTEGER,
     raw_html_path TEXT,
+    -- Set when another URL already stored byte-identical content (mirrors,
+    -- print views, aliases). The row is kept in full so the URL stays known;
+    -- the index-building phase just filters on duplicate_of IS NULL.
+    duplicate_of TEXT,
     crawled_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -98,13 +102,23 @@ class Storage:
         try:
             with self.lock:
                 cursor = self.conn.cursor()
+
+                # Exact-duplicate detection. idx_pages_content_hash makes this a
+                # cheap indexed lookup, and it runs inside the same transaction as
+                # the insert so two workers cannot both decide they are the original.
+                duplicate_of = cursor.execute(
+                    "SELECT url FROM pages WHERE content_hash = ? AND url <> ? LIMIT 1",
+                    (content_hash, url),
+                ).fetchone()
+                duplicate_of = duplicate_of[0] if duplicate_of else None
+
                 cursor.execute(
                     """INSERT OR REPLACE INTO pages
                        (url, title, content, content_hash, status_code, content_length,
-                        depth, raw_html_path)
-                       VALUES (?,?,?,?,?,?,?,?)""",
+                        depth, raw_html_path, duplicate_of)
+                       VALUES (?,?,?,?,?,?,?,?,?)""",
                     (url, title, content, content_hash, status_code,
-                     len(content), depth, raw_html_path),
+                     len(content), depth, raw_html_path, duplicate_of),
                 )
 
                 if links:
@@ -152,26 +166,63 @@ class Storage:
         except sqlite3.Error as e:
             logger.error(f"DB error adding frontier URLs: {e}")
 
-    def load_frontier(self):
-        """Return (pending, visited) for resuming an interrupted crawl."""
-        with self.lock:
-            cursor = self.conn.cursor()
-            pending = cursor.execute(
-                "SELECT url, depth FROM frontier WHERE status='pending'"
-            ).fetchall()
-            visited = {
-                row[0] for row in cursor.execute(
-                    "SELECT url FROM frontier WHERE status IN ('visited','failed')"
+    def record_redirect(self, from_url, to_url, depth=0):
+        """Note that from_url redirected to to_url.
+
+        A redirect is a real edge in the web graph -- links pointing at the old
+        URL are votes for the new page -- so it is stored in `links` like any
+        other, and the old URL is retired from the frontier.
+        """
+        try:
+            with self.lock:
+                self.conn.execute(
+                    "INSERT OR IGNORE INTO links (from_url, to_url) VALUES (?,?)",
+                    (from_url, to_url),
                 )
-            }
-        return pending, visited
+                self.conn.execute(
+                    "INSERT OR REPLACE INTO frontier (url, status, depth) "
+                    "VALUES (?,'redirected',?)",
+                    (from_url, depth),
+                )
+                self.conn.commit()
+        except sqlite3.Error as e:
+            logger.error(f"DB error recording redirect {from_url} -> {to_url}: {e}")
+
+    def iter_frontier(self, batch_size=1000):
+        """Stream every frontier row as (url, status, depth), for crash resume.
+
+        A generator, not a list: the caller feeds these straight into a Bloom
+        filter, so a multi-million-URL frontier never materialises in memory --
+        which is the whole reason the Bloom filter is there.
+
+        Pagination is by url rather than LIMIT/OFFSET. OFFSET makes SQLite walk
+        and discard every earlier row, turning a full scan into O(n^2); seeking
+        on the primary key instead keeps each batch an index lookup.
+        """
+        last_url = ""
+        while True:
+            with self.lock:
+                rows = self.conn.execute(
+                    "SELECT url, status, depth FROM frontier "
+                    "WHERE url > ? ORDER BY url LIMIT ?",
+                    (last_url, batch_size),
+                ).fetchall()
+
+            if not rows:
+                return
+
+            yield from rows
+            last_url = rows[-1][0]
 
     def stats(self):
         with self.lock:
             cursor = self.conn.cursor()
             pages = cursor.execute("SELECT COUNT(*) FROM pages").fetchone()[0]
             links = cursor.execute("SELECT COUNT(*) FROM links").fetchone()[0]
-        return pages, links
+            duplicates = cursor.execute(
+                "SELECT COUNT(*) FROM pages WHERE duplicate_of IS NOT NULL"
+            ).fetchone()[0]
+        return pages, links, duplicates
 
     def close(self):
         with self.lock:
